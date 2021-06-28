@@ -29,20 +29,50 @@
     <link href="/static/mystyle.css" rel="stylesheet">
     <title>CRUD 주특기 사전과제</title>
     <script>
-
-        $(document).ready(function () {
-        })
-
         function modify_post() {
-            let pathName = location.pathname.split("/")[2]
-            location.href = `/modify/${pathName}`
+            const user = $('#user').val()
+            const title = $('#title').val()
+            // 해시함수를 사용해야함
+            const password = $('#password').val()
+            const content = $('#content').val()
+            const _id = location.pathname.split('/')[2]
+
+            // console.log(_id);
+            // console.log(`/api/modify/${_id}`);
+            $.ajax({
+                type: "PATCH",
+                url: `/api/modify/${_id}`,
+                data: {user, title, password, content},
+                success: (response) => {
+                    const result_code = response['result']
+                    if (result_code == 406) {
+                        alert(`패스워드가 일치하지 않습니다.`)
+                    } else {
+                        location.href = `/`
+                    }
+                }
+            })
         }
 
+        function delete_post() {
+            const password = $('#password').val()
+            let pathName = location.pathname.split("/")[2]
+            // console.log(pathName);
+            $.ajax({
+                type: "DELETE",
+                url: `/api/delete/${pathName}`,
+                data: {password},
+                success: (response) => {
+                    if (response['result'] == 406) {
+                        alert('패스워드가 일치하지 않습니다.')
+                    } else {
+                        location.href = '/'
+                    }
+                }
+            })
+        }
     </script>
     <style>
-        .card {
-            cursor: pointer;
-        }
 
         html {
             overflow: auto;
@@ -62,11 +92,14 @@
     <div class="navbar-collapse collapse flex-grow-0 ml-auto" id="navbarSupportedContent" style="">
         <ul class="navbar-nav mr-auto text-right">
             <li class="nav-item" id="link-cart">
-
-                <a class="nav-link" href="/write">
-                    게시글 작성
+                <a class="nav-link" onclick="modify_post()">
+                    수정완료
                 </a>
-
+            </li>
+            <li class="nav-item" id="link-cart">
+                <a class="nav-link" onclick="delete_post()">
+                    삭제
+                </a>
             </li>
 
         </ul>
@@ -77,29 +110,30 @@
 
     <div class="container">
         <div class="d-flex justify-content-between align-items-end">
-            <div>
-                <div>
-                    <h3 id="word" style="display: inline;"><%= title %></h3>
-<!--                    <button id="btn-delete" class="btn btn-sparta btn-lg" onclick="delete_post()">-->
-<!--                        <i class="fa fa-trash" aria-hidden="true"></i>-->
-<!--                    </button>-->
-                    <button id="btn-modify" class="btn btn-sparta btn-lg" onclick="modify_post()">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </button>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Title</span>
                 </div>
-                <h5 id="pronunciation" style="display: inline;"><%= user %></h5>
-                <h6 id="pronunciation" style="display: inline;"><%= createdAt %></h6>
+                <input id="title" type="text" class="form-control" placeholder="" aria-label=""
+                       aria-describedby="basic-addon1" value="<%= title %>">
             </div>
-
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">User</span>
+            </div>
+            <input id="user" type="text" class="form-control" placeholder="" aria-label=""
+                   aria-describedby="basic-addon1" value="<%= user %>">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Pass</span>
+            </div>
+            <input id="password" type="password" class="form-control" placeholder="" aria-label=""
+                   aria-describedby="basic-addon1">
         </div>
         <hr>
-        <div id="definitions">
-            <div style="padding:10px">
-                <%= content %>
-            </div>
+        <div class="form-group">
+            <textarea class="form-control" id="content" rows="3"><%= content %></textarea>
         </div>
-
-
     </div>
 
 

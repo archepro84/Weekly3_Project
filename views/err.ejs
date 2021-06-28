@@ -27,7 +27,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.4.0/socket.io.js"></script>
 
     <link href="/static/mystyle.css" rel="stylesheet">
-    <title>스파르타 쇼핑몰 | 상품 목록</title>
+    <title>CRUD 주특기 사전과제</title>
     <script>
         $(document).ready(function () {
             get_posts()
@@ -51,41 +51,6 @@
             })
         }
 
-        function make_view(postId, user, title) {
-            let temp_html =
-                `        <div class="d-flex justify-content-between align-items-end">
-            <div>
-                <div>
-                    <h3 id="word" style="display: inline;">게시글 제목 입니다.</h3>
-                    <button id="btn-delete" class="btn btn-sparta btn-lg" onclick="delete_post()">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                    </button>
-                    <button id="btn-modify" class="btn btn-sparta btn-lg" onclick="modify_post()">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <h5 id="pronunciation" style="display: inline;">작성자</h5>
-                <h6 id="pronunciation" style="display: inline;">2021-06-25.12:30:11</h6>
-            </div>
-
-        </div>
-        <hr>
-        <div id="definitions">
-            <div style="padding:10px">
-                <h1>나는 사람 입니다.</h1>
-                이것은 게시글 내용 입니다.
-            </div>
-        </div>`
-
-        }
-
-        function delete_post() {
-            console.log("delete_post Click");
-        }
-
-        function modify_post() {
-            console.log("modify_post Click");
-        }
 
     </script>
     <style>
@@ -96,12 +61,6 @@
         html {
             overflow: auto;
         }
-
-        /*.wrap {*/
-        /*    background-color: RGBA(232, 52, 78, 0.2);*/
-        /*    !*min-height: 100vh;*!*/
-        /*    padding-bottom: 50px;*/
-        /*}*/
 
     </style>
 </head>

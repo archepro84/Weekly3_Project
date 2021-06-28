@@ -30,47 +30,25 @@
     <title>CRUD 주특기 사전과제</title>
     <script>
         $(document).ready(function () {
-            get_posts()
+
         })
 
-        function sign_out() {
-            $.removeCookie('mytoken', {path: '/'});
-            $.removeCookie('userName', {path: '/'});
-            window.location.href = "/"
-        }
-
-        function get_posts(category) {
-            // 상품창의 리스트를 삭제한다.
-            $('#tbody-box').empty()
-            console.log(category)
-            console.log("Get Posts");
+        function write_post() {
+            const title = $('#title').val();
+            const user = $('#user').val();
+            const password = $('#password').val();
+            const content = $('#content').val();
+            console.log(title, user, password, content);
             $.ajax({
-                type: "GET",
-                url: `/api/posts`,
-                data: {},
-                success: function (response) {
-                    //카테고리에 해당하는 goods를 가지고 온다.
-                    let posts = response["result"]
-                    for (let i = 0; i < posts.length; i++) {
-                        const _id = posts[i]['_id']
-                        const user = posts[i]['user']
-                        const title = posts[i]['title']
-                        const createdAt = posts[i]['createdAt']
-                        make_post(_id, user, title, createdAt)
-                    }
+                type: "POST",
+                url: '/api/write',
+                data: {title, user, password, content},
+                success: (response) => {
+                    console.log(response['result']);
+                    location.href = "/";
                 }
             })
-        }
 
-        function make_post(_id, user, title, createdAt) {
-
-            let temp_html = `
-            <tr id="word-${_id}">
-                <td>${user}</td>
-                <td><a href="/view/${_id}">${title}</a></td>
-                <td>${createdAt}</td>
-            </tr>`
-            $('#tbody-box').append(temp_html)
         }
 
     </script>
@@ -97,8 +75,8 @@
     <div class="navbar-collapse collapse flex-grow-0 ml-auto" id="navbarSupportedContent" style="">
         <ul class="navbar-nav mr-auto text-right">
             <li class="nav-item" id="link-cart">
-                <a class="nav-link" href="/write">
-                    게시글 작성
+                <a class="nav-link" onclick="write_post()">
+                    등록
                 </a>
             </li>
 
@@ -107,39 +85,33 @@
 
 </nav>
 <div class="wrap">
-    <!--    <div>-->
-    <!--        <div class="form-group row mr-0">-->
-    <!--            -->
-    <!--            <label for="categorySelect" class="col-4 col-form-label">카테고리</label>-->
-    <!--            <select class="form-control col-8" id="categorySelect">-->
-    <!--                <option value="" selected>전체</option>-->
-    <!--                <option value="drink">음료</option>-->
-    <!--                <option value="food">음식</option>-->
-    <!--            </select>-->
-    <!--        </div>-->
-    <!--    </div>-->
 
-
-    <div id="postList" class="mb-3">
-        <table class="table">
-
-            <thead class="thead-light">
-            <tr>
-                <th scope="col" style="width:30%">작성자</th>
-                <th scope="col">게시글</th>
-            </tr>
-            </thead>
-            <tbody id="tbody-box">
-            <!--            <tr id="word-1">-->
-            <!--                <td>천명훈</td>-->
-            <!--                <td><a href="/post/1">게시글 제목</a></td>-->
-            <!--            </tr>-->
-            <!--            <tr id="word-2">-->
-            <!--                <td>김덕배</td>-->
-            <!--                <td><a href="/post/2">ㄴㅇ라ㅓㅗㅊㅍ타ㅣㅓㅗㅊ터ㅏ포ㅓㅏㅣㅊ퐈ㅣ</a></td>-->
-            <!--            </tr>-->
-            </tbody>
-        </table>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Title</span>
+                </div>
+                <input id="title" type="text" class="form-control" placeholder="" aria-label=""
+                       aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">User</span>
+            </div>
+            <input id="user" type="text" class="form-control" placeholder="" aria-label=""
+                   aria-describedby="basic-addon1">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Pass</span>
+            </div>
+            <input id="password" type="password" class="form-control" placeholder="" aria-label=""
+                   aria-describedby="basic-addon1">
+        </div>
+        <hr>
+        <div class="form-group">
+            <textarea class="form-control" id="content" rows="3"></textarea>
+        </div>
     </div>
 
 

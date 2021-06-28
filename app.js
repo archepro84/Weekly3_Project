@@ -5,7 +5,7 @@ const port = 3000
 
 //최 상단에서 request로 수신되는 Post 데이터가 정상적으로 수신되도록 설정한다.
 //주소 형식으로 데이터를 보내는 방식
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded( {extended: false}))
 app.use(express.json())
 app.use(express.static('public'))
 
@@ -24,13 +24,14 @@ const routerRouter = require("./routers/router");
 app.use("/api", [routerRouter]);
 
 const viewRouter = require("./routes/view");
-app.use("/", [viewRouter]);
+const writeRouter = require("./routes/write");
+const modifyRouter = require("./routes/modify");
+app.use("/", [viewRouter, writeRouter, modifyRouter]);
 
 
 app.get('/', (request, response) => {
     // let name = request.query.name
-    let name = "Hello My NAme NAME MASMD AMS"
-    response.render('index', {name});
+    response.render('index');
     // console.log(`name : ${name}`);
 });
 
@@ -43,6 +44,12 @@ app.get('/err', (req, res) => {
     console.log("insert error");
     res.render('err');
 })
+
+app.get('/write', (req, res) => {
+    res.render('write');
+})
+
+
 
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`)
