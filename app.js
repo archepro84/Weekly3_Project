@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const app = express();
 const port = 3000
@@ -36,9 +38,11 @@ app.get('/', (request, response) => {
 });
 
 app.get('/goods', (request, response) => {
-    let name = request.query.name
-    response.render('index', {name});
-    console.log(`name : ${name}`);
+    // let name = request.query.name
+    // let name = "나는 네임입니다."
+    // console.log(name);
+    response.render('index');
+    // console.log(`name : ${name}`);
 });
 app.get('/err', (req, res) => {
     console.log("insert error");
@@ -48,8 +52,6 @@ app.get('/err', (req, res) => {
 app.get('/write', (req, res) => {
     res.render('write');
 })
-
-
 
 app.listen(port, () => {
     console.log(`listening at http://localhost:${port}`)

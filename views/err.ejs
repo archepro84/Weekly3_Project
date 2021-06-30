@@ -52,6 +52,21 @@
         }
 
 
+        function ajax_start() {
+
+            $.ajax({
+                type: "GET",
+                url: `/api/hello`,
+                data: {"A": "HEllo"},
+                success: function (response) {
+                    $('#btn_hello').text(response['result'])
+                    const a = $('#password').val();
+                    console.log(a);
+                }
+            })
+
+        }
+
     </script>
     <style>
         .card {
@@ -95,6 +110,9 @@
             <div>
                 <div>
                     <h3 id="word" style="display: inline;">게시글이 존재하지 않습니다.</h3>
+                    <button id="btn_hello" onclick="ajax_start()">안녕</button>
+                    <input id="password" type="password" class="form-control" placeholder="" aria-label=""
+                           aria-describedby="basic-addon1">
                 </div>
             </div>
         </div>

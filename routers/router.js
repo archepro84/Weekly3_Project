@@ -30,6 +30,12 @@ router.get('/posts', async (req, res) => {
     res.send({result: json_data})
 })
 
+router.get("/hello", async (req, res) => {
+    // console.log(req);
+    // console.log();
+    res.send({result:"수고했어요"})
+})
+
 router.post('/write', async (req, res) => {
     // console.log("Hello ");
     // console.log(req.body);
@@ -48,7 +54,7 @@ router.patch('/modify/:_id', async (req, res) => {
     const content = req.body['content']
 
     const isExist = await Post.findOne({_id, password})
-    if (!isExist || !_id) {
+    if (!isExist || !_id || !user || !password || !title || !content) {
         console.log("modify/_id : 일치하지 않는 비밀번호 입니다.");
         res.send({result: 406})
         return
